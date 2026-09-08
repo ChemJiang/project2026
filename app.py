@@ -216,7 +216,8 @@ TRANSLATIONS = {
         "section_mes_system": "MES System",
         "section_six_sigma": "Six Sigma Analysis",
         "mes_heading": "Manufacturing Execution System",
-        "mes_caption": "Work-order, production, quality and traceability workflow backed by SQLite.",
+        "mes_caption": "Work-order, production, quality and traceability workflow backed by persistent PostgreSQL storage.",
+        "mes_capability_caption": "The system supports work order creation and visualized production progress.",
         # SolidWorks modeling
         "sw_heading": "SolidWorks Modeling",
         "sw_caption": "Parametric design and assembly verification of an agricultural robotic arm.",
@@ -276,7 +277,7 @@ TRANSLATIONS = {
         "flash_rework_started": "Defect #{id} entered rework.",
         "flash_rework_closed": "Rework closed. The unit is ready for reinspection.",
         # Empty / state hints
-        "empty_no_products": "No product data found. Run `python database/init_db.py` first.",
+        "empty_no_products": "No product data found. Check the database configuration and seed data.",
         "empty_no_work_orders": "No work orders found.",
         "empty_no_units": "No units found for this work order.",
         "empty_no_active_orders": "No active work orders found. Release a work order in the Work Order List first.",
@@ -487,7 +488,8 @@ TRANSLATIONS = {
         "section_mes_system": "MES 系统",
         "section_six_sigma": "六西格玛分析",
         "mes_heading": "制造执行系统（MES）",
-        "mes_caption": "基于 SQLite 的工单、生产、质量和追溯闭环。",
+        "mes_caption": "基于持久化 PostgreSQL 数据库的工单、生产、质量和追溯闭环。",
+        "mes_capability_caption": "系统可创建工单及可视化生产进度。",
         # SolidWorks 建模
         "sw_heading": "SolidWorks 建模",
         "sw_caption": "农业机械臂的参数化设计与装配验证。",
@@ -547,7 +549,7 @@ TRANSLATIONS = {
         "flash_rework_started": "缺陷 #{id} 已开始返工。",
         "flash_rework_closed": "返工已关闭，可重新检测。",
         # Empty / state hints
-        "empty_no_products": "无产品数据，请先运行 `python database/init_db.py`。",
+        "empty_no_products": "无产品数据，请检查数据库配置与基础数据。",
         "empty_no_work_orders": "暂无工单。",
         "empty_no_units": "该工单暂无 units。",
         "empty_no_active_orders": "暂无已发布/生产中的工单，请先在工单列表发布工单。",
@@ -1085,6 +1087,7 @@ def render_solidworks_modeling():
                 source_path.read_bytes(),
                 file_name=source_path.name,
                 mime="application/zip",
+                on_click="ignore",
                 use_container_width=True,
             )
         else:
@@ -1209,6 +1212,7 @@ def render_anylogic_simulation():
             SOURCE_ALP.read_bytes(),
             file_name=SOURCE_ALP.name,
             mime="application/octet-stream",
+            on_click="ignore",
             use_container_width=True,
         )
     else:
@@ -1510,7 +1514,13 @@ def render_traceability():
         } for e in trace["production_events"]]
         csv_df = pd.DataFrame(csv_rows, columns=["serial_number", "work_order_code", "operation_code", "operation_name", "attempt_no", "event_type", "operator", "occurred_at"])
         csv_bytes = csv_df.to_csv(index=False).encode("utf-8-sig")
-        st.download_button(t("button_download_csv"), csv_bytes, file_name=f"{unit['serial_number']}_traceability.csv", mime="text/csv")
+        st.download_button(
+            t("button_download_csv"),
+            csv_bytes,
+            file_name=f"{unit['serial_number']}_traceability.csv",
+            mime="text/csv",
+            on_click="ignore",
+        )
 
 
 def render_dashboard():
@@ -1722,24 +1732,28 @@ def render_six_sigma_analytics():
         results["report_path"].read_bytes(),
         file_name="six_sigma_analysis_report.md",
         mime="text/markdown",
+        on_click="ignore",
     )
     c2.download_button(
         t("ss_download_raw"),
         results["raw_data_path"].read_bytes(),
         file_name="quality_before_after.csv",
         mime="text/csv",
+        on_click="ignore",
     )
     c3.download_button(
         t("ss_download_control"),
         results["control_plan_path"].read_bytes(),
         file_name="control_plan.csv",
         mime="text/csv",
+        on_click="ignore",
     )
     c4.download_button(
         t("ss_download_validation"),
         results["validation_path"].read_bytes(),
         file_name="analysis_validation.json",
         mime="application/json",
+        on_click="ignore",
     )
 
 
@@ -1811,6 +1825,7 @@ elif active_section == "anylogic":
 elif active_section == "mes_system":
     st.header(t("mes_heading"))
     st.caption(t("mes_caption"))
+    st.caption(t("mes_capability_caption"))
     tab_labels = [t(f"tab_{key}") for key in PAGE_KEYS]
     tab_dashboard, tab_create, tab_list, tab_exec, tab_quality, tab_trace = st.tabs(
         tab_labels,
