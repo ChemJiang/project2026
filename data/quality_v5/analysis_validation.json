@@ -1,0 +1,107 @@
+{
+  "release": {
+    "version": "EOL-EG-V5",
+    "status": "CURRENT",
+    "v3_status": "RETIRED",
+    "v4_status": "SUPERSEDED",
+    "data_label": "Synthetic Data"
+  },
+  "input_checks": {
+    "validated_release": true,
+    "configuration_revalidated": true,
+    "csv_hashes_verified": true,
+    "source_hashes_verified": true,
+    "row_counts": true,
+    "synthetic_label": true,
+    "version_match": true,
+    "stage_counts": true,
+    "outcomes_recomputed": true,
+    "capability_recomputed": true,
+    "msa_recomputed": true,
+    "improvement_recomputed": true
+  },
+  "chart_count": 12,
+  "all_chart_files_exist": true,
+  "chart_manifest": "chart_manifest.csv",
+  "root_cause_analysis": {
+    "row_count": 8,
+    "before_ols_r_squared": 0.8802305678528654,
+    "modeled_mean_shift_n": 0.33080775,
+    "observed_mean_shift_n": 0.342649999999999,
+    "causal_claim_scope": "SCENARIO_ENCODED_RELATIONSHIP"
+  },
+  "control_plan": {
+    "row_count": 10,
+    "all_rows_have_reaction_plan": true,
+    "all_rows_have_owner_and_record": true,
+    "all_statuses_in_enum": true,
+    "open_statuses": [
+      "Gripping force CTQ",
+      "Motor current",
+      "Jaw alignment error",
+      "Gear backlash",
+      "Pad thickness",
+      "Fastener torque",
+      "Sensor zero offset",
+      "I-MR stability",
+      "Process capability",
+      "Gage R&R"
+    ]
+  },
+  "generalization_checks": {
+    "ppk_below_branch": true,
+    "ppk_meets_branch": true,
+    "gage_pass_branch": true,
+    "gage_conditional_branch": true,
+    "gage_unacceptable_pct_branch": true,
+    "gage_unacceptable_ndc_branch": true,
+    "figure08_pass_text": true,
+    "figure08_conditional_text": true,
+    "figure08_unacceptable_text": true,
+    "figure12_passing_items_not_blockers": true,
+    "figure12_failure_items_are_blockers": true,
+    "figure08_manifest_row_matches": true,
+    "figure12_manifest_row_matches": true,
+    "manifest_roundtrip_matches": true,
+    "figure08_manifest_file_matches": true,
+    "figure12_manifest_file_matches": true
+  },
+  "artifact_sha256": {
+    "root_cause_analysis.csv": "c35d3961a32f49e05030d836e3998b2569208ec21dc7de2c502458b323634eef",
+    "control_plan.csv": "c4d1e2db64945a57b2dc7316c1fa21e32eb39229fe1e88bb8a0e06c00f5addd1",
+    "six_sigma_analysis_report.md": "460fb59cfdc7ceb0c889263610b314b74da59cef91a45aa6ca0d6b5d54cd4f97",
+    "chart_manifest.csv": "d61d4b285ee992815ed7bbda6058925e3b16167876abc35de8737343892e044a"
+  },
+  "source_sha256": {
+    "generation_config.json": "50540b7d56aaf169c6880c514ddb8a0b0c4a8c6ebeaafd985845fcb5b2f94df3",
+    "generate_quality_data.py": "e8863b9e7a5ba5036e4e7817b1405a82d3f2405b24a00efb46a27d080cfdfc25",
+    "quality_baseline.csv": "031c9b93755777b3f4419823534297e96c42a01ea09bd8bd6f5504a7ef693ada",
+    "quality_before_after.csv": "f36d2112e996d55027b11f538fe20050d72dbe8af19970088b5fa5fa182df179",
+    "quality_msa.csv": "b305bbbaf52b21346b197234cd2be79fe61a67dab4c554a3ce08c179a79369e0",
+    "six_sigma_data_dictionary.csv": "ee34deee4196e1cdc36ba642da7a61f314c774fb57ba22a12a388a5ee7fca3da",
+    "validation_report.json": "d01f69a2baf05c5b378295d55675535474fe18b7d61af8ac079aff12308e9982",
+    "analyze_quality_data.py": "281853f6707d23d35431b9c98f9331605cfe4d365f3bb179fd7929eeea3e4acd"
+  },
+  "metrics_source": "Independently recomputed from verified CSV inputs; validation_report.json used only as a comparison contract.",
+  "environment": {
+    "python": "3.12.13",
+    "numpy": "2.3.5",
+    "pandas": "2.2.3",
+    "matplotlib": "3.10.8"
+  },
+  "chart_sha256": {
+    "01_force_run_chart.png": "43105446c8b548b44aa286633aea74ded9a81468131f720d6c142b3aa2e13026",
+    "02_force_distribution.png": "da957031679da1047262d8e24b83130bd9b3439ff91cd02eb53f844ce58a1296",
+    "03_force_boxplot.png": "6c9923aa1a5e94cd9c7d91341405cf49b9035312738093678383daa0e7681a90",
+    "04_imr_before.png": "d400a67d8b6e1d3108895953c82a636c3cd3d40b55709dfe1c4fc6fac0c79282",
+    "05_imr_after.png": "b537b143e05c5cfdda6e91033ab80322e15bffaaf8cb6c2f17abf212e9cace29",
+    "06_capability_comparison.png": "8bd0d624f66705a0190b7b79be3a87d36bafd7a57142c858326988c96f2264d7",
+    "07_process_factor_distributions.png": "04f77fe47041ae13b962d5d513bb3cc7149561856a2762b40f6943f6cd682731",
+    "08_msa_variance_components.png": "d27fc43ee00a9d6636da9060a118572c8f827334fd634d89f9f16da76334fd82",
+    "09_msa_part_appraiser.png": "852ed5a4113d14bf504ea102c8b572fd9692cd5ba08b86096f73854f5aeae3bd",
+    "10_improvement_summary.png": "65cdee86dbb5ab6cc8fc79610f34b2721672e31da61a345f62048e99b0436d48",
+    "11_root_cause_contribution.png": "e4fe0eb9cb80bd617d62494bc098a1aeedd52d634ce21aa05aeabf0a021eba7b",
+    "12_control_plan_readiness.png": "08a031ecf0c8feb95a1b742c8f87a7420358641ea6e9a0e369ae11de25ce1660"
+  },
+  "chart_hash_scope": "Environment-specific; PNG bytes are not guaranteed reproducible across Python/NumPy/Matplotlib versions. Semantic verification is via chart_manifest.csv."
+}

@@ -1,0 +1,4 @@
+﻿Scenario_ID,Scenario_Name,Replications,Mean_Completed,SD_Completed,Completed_CI95_HalfWidth,Mean_WIP,SD_WIP,WIP_CI95_HalfWidth,Mean_Throughput,SD_Throughput,Throughput_CI95_HalfWidth,Mean_Assembly_Util,SD_Assembly_Util,AssemblyUtil_CI95_HalfWidth,Dominant_Bottleneck,Bottleneck_Frequency,Mean_Bottleneck_Util
+S0,Baseline_8h,10,14,0,0,2,0,0,1.75,0,0,0.84,0.0182574185835,0.0130605704689,AssemblyOperator,1,0.834
+S1,HighDemand_8h,10,12.5,0.527046276695,0.3770261938,11.5,0.527046276695,0.3770261938,1.5625,0.0658807845868,0.047128274225,0.935,0.0164991582277,0.0118027867809,AssemblyOperator,1,0.93
+S2,HighDemand_3Operators,10,18.7,1.33749350985,0.956785218962,5.3,1.33749350985,0.956785218962,2.3375,0.167186688731,0.11959815237,0.783,0.0240601099102,0.0172115657826,MechanicalBench,1,0.973

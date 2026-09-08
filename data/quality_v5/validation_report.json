@@ -1,0 +1,167 @@
+{
+  "release": {
+    "version": "EOL-EG-V5",
+    "status": "CURRENT",
+    "v3_status": "RETIRED",
+    "v4_status": "SUPERSEDED",
+    "data_label": "Synthetic Data"
+  },
+  "configuration_validation": {
+    "status": "PASS",
+    "check_count": 147,
+    "capability_definition": "Pp/Cp denominator = 6 sigma; Ppk/Cpk one-sided denominator = 3 sigma",
+    "control_limit_independence": "I-MR control_sigma_multiplier is not used in capability indices",
+    "residual_sd_decision": "UNCHANGED: part_residual_sd_n is 0.28 N in both stages"
+  },
+  "structural_checks": {
+    "row_counts": true,
+    "combined_exact": true,
+    "unique_ids": true,
+    "no_blank_main_cells": true,
+    "synthetic_labels": true,
+    "current_version": true,
+    "stage_timestamps": true,
+    "timezone_offsets": true,
+    "production_dates": true,
+    "resolution": true,
+    "no_boundary_pileup": true,
+    "specification": true,
+    "outcomes": true,
+    "improvement_metadata": true,
+    "msa_foreign_keys": true,
+    "msa_unique_ids_and_timestamps": true,
+    "msa_source_stage": true,
+    "msa_crossed": true,
+    "msa_order_integrity": true,
+    "msa_fixed_references": true,
+    "shared_protocol": true,
+    "dictionary_coverage": true,
+    "dictionary_unique_keys": true,
+    "dictionary_required_metadata": true,
+    "residual_sd_unchanged": true,
+    "capability_standard_formula": true,
+    "capability_independent_of_control_multiplier": true
+  },
+  "structural_status": "PASS",
+  "expected_counts_from_config": {
+    "per_process_stage": 200,
+    "before_after_total": 400,
+    "msa": 60
+  },
+  "before": {
+    "n": 200,
+    "mean_n": 11.66295,
+    "overall_sd_n": 0.7693518759613355,
+    "observed_range_n": [
+      9.4,
+      13.81
+    ],
+    "defects": 3,
+    "defect_rate": 0.015,
+    "defect_types": {
+      "No Defect": 197,
+      "Under Force": 3
+    },
+    "Pp_descriptive": 0.866530241228879,
+    "Ppk_descriptive": 0.7204982323257824,
+    "Cp_MR_provisional": 0.8600954077820564,
+    "Cpk_MR_provisional": 0.7151478291855855,
+    "control_screen": {
+      "method": "Phase I retrospective I-MR; configured sigma point rule only",
+      "phase": "PHASE_I",
+      "phase_i_in_control": false,
+      "phase_ii_status": "NOT_ESTABLISHED",
+      "phase_ii_note": "Phase II prospective monitoring limits may only be carried forward from a demonstrably in-control Phase I; this sample has point-rule alarms.",
+      "i_lcl_n": 9.337626574361167,
+      "i_ucl_n": 13.988273425638834,
+      "mr_ucl_n": 2.8564086934673365,
+      "i_flags": [],
+      "mr_flags": [
+        "BL-049"
+      ]
+    }
+  },
+  "after": {
+    "n": 200,
+    "mean_n": 12.0056,
+    "overall_sd_n": 0.5140318899831002,
+    "observed_range_n": [
+      10.67,
+      13.39
+    ],
+    "defects": 0,
+    "defect_rate": 0,
+    "defect_types": {
+      "No Defect": 200
+    },
+    "Pp_descriptive": 1.2969363956944084,
+    "Ppk_descriptive": 1.2933049737864644,
+    "Cp_MR_provisional": 1.2252169641395119,
+    "Cpk_MR_provisional": 1.2217863566399216,
+    "control_screen": {
+      "method": "Phase I retrospective I-MR; configured sigma point rule only",
+      "phase": "PHASE_I",
+      "phase_i_in_control": false,
+      "phase_ii_status": "NOT_ESTABLISHED",
+      "phase_ii_note": "Phase II prospective monitoring limits may only be carried forward from a demonstrably in-control Phase I; this sample has point-rule alarms.",
+      "i_lcl_n": 10.373236052603442,
+      "i_ucl_n": 13.637963947396557,
+      "mr_ucl_n": 2.0051828140703516,
+      "i_flags": [],
+      "mr_flags": [
+        "AF-118",
+        "AF-158"
+      ]
+    }
+  },
+  "improvement_comparison": {
+    "mean_shift_toward_target_n": 0.33145000000000024,
+    "overall_sd_reduction_pct": 33.18637335604113,
+    "defect_rate_reduction_percentage_points": 1.5,
+    "Ppk_change": 0.572806741460682,
+    "interpretation": "Synthetic scenario comparison only; not evidence that real interventions caused these effects."
+  },
+  "msa": {
+    "method": "Balanced crossed random-effects ANOVA; interaction retained; negative variance estimates floored at zero",
+    "dimensions": {
+      "parts": 10,
+      "appraisers": 3,
+      "replicates": 2
+    },
+    "reference_range_n": [
+      10.273973,
+      12.883949
+    ],
+    "variance_components_n2": {
+      "part": 0.60338787037037,
+      "appraiser": 0.0013187962962963352,
+      "part_appraiser_interaction": 0.0,
+      "repeatability": 0.004616666666666662,
+      "total_gage_rr": 0.005935462962962997
+    },
+    "part_sd_n": 0.7767804518461893,
+    "grr_sd_n": 0.07704195586148496,
+    "pct_tolerance": 11.556293379222744,
+    "pct_study_variation": 9.86968734223353,
+    "ndc": 14,
+    "acceptance": "CONDITIONAL"
+  },
+  "limitations": [
+    "All physics, ranges, coefficients, interventions, identities, timestamps and measurement behavior are synthetic assumptions.",
+    "Before and After are independent production cohorts, not repeated measurements of the same grippers.",
+    "The After improvement is encoded in model parameters, so statistical improvement is scenario output rather than discovered causal evidence.",
+    "The unobserved part residual has the same 0.28 N SD in Before and After; only observable process-factor distributions encode improvement.",
+    "Capability indices remain descriptive or provisional until control-chart assumptions and all relevant stability checks are accepted.",
+    "No rows were deleted and the declared seeds were not searched for favorable statistical results."
+  ],
+  "sha256": {
+    "quality_baseline.csv": "031c9b93755777b3f4419823534297e96c42a01ea09bd8bd6f5504a7ef693ada",
+    "quality_before_after.csv": "f36d2112e996d55027b11f538fe20050d72dbe8af19970088b5fa5fa182df179",
+    "quality_msa.csv": "b305bbbaf52b21346b197234cd2be79fe61a67dab4c554a3ce08c179a79369e0",
+    "six_sigma_data_dictionary.csv": "ee34deee4196e1cdc36ba642da7a61f314c774fb57ba22a12a388a5ee7fca3da"
+  },
+  "source_sha256": {
+    "generation_config.json": "50540b7d56aaf169c6880c514ddb8a0b0c4a8c6ebeaafd985845fcb5b2f94df3",
+    "generate_quality_data.py": "e8863b9e7a5ba5036e4e7817b1405a82d3f2405b24a00efb46a27d080cfdfc25"
+  }
+}

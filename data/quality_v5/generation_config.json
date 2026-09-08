@@ -1,0 +1,161 @@
+{
+  "version": "EOL-EG-V5",
+  "release_status": "CURRENT",
+  "supersedes": "EOL-EG-V4",
+  "deliverable_contract": {
+    "rows_per_stage": 200,
+    "combined_rows": 400,
+    "msa_parts": 10
+  },
+  "data_label": "Synthetic Data",
+  "source_system": "Synthetic EOL inspection generator",
+  "rng": "Mulberry32 uint32; Box-Muller cosine; no cached normal variate",
+  "rounding": "floor(x * 10^digits + 0.5) / 10^digits",
+  "bounds_method": "Rejection-sampled normal. A draw is accepted only when its value rounded to the configured precision lies strictly inside both engineering bounds; no hard clipping.",
+  "sampler_max_attempts": 100000,
+  "seeds": {
+    "before_process": 2026090703,
+    "before_measurement": 2026090705,
+    "msa": 2026090704,
+    "after_process": 2026090706,
+    "after_measurement": 2026090707
+  },
+  "specification": {
+    "ctq": "Gripping Force",
+    "target_n": 12.0,
+    "lsl_n": 10.0,
+    "usl_n": 14.0,
+    "limits_inclusive": true
+  },
+  "sampling": {
+    "production_day_offsets": [0, 1, 2, 3, 4, 7, 8, 9, 10, 11],
+    "shifts": [
+      {"name": "Day", "start_hour": 8},
+      {"name": "Night", "start_hour": 20}
+    ],
+    "samples_per_shift": 10,
+    "interval_minutes": 30,
+    "operator_rotation_block_size": 5,
+    "timezone_name": "Asia/Singapore",
+    "utc_offset_hours": 8
+  },
+  "measurement": {
+    "device_id": "FORCE-SENSOR-01",
+    "resolution_n": 0.01,
+    "force_record_digits": 2,
+    "repeatability_sd_n": 0.042,
+    "zero_offset_sd_n": 0.040,
+    "zero_offset_bounds_n": [-0.12, 0.12],
+    "zero_offset_record_digits": 3,
+    "appraisers": [
+      {"id": "APP-A", "bias_n": -0.020},
+      {"id": "APP-B", "bias_n": 0.030},
+      {"id": "APP-C", "bias_n": -0.010}
+    ],
+    "protocol_id": "EOL-FORCE-01-V5",
+    "test_block_id": "TB-30-01",
+    "test_block_diameter_mm": 30.0,
+    "closing_speed_mm_s": 20.0,
+    "hold_time_s": 1.0,
+    "contact_distance_from_jaw_root_mm": 20.0,
+    "force_definition": "One compressive load-cell reading after a 1 s hold; not the sum of two jaw forces",
+    "zero_policy": "Synthetic pre-cycle zero residual is recorded and remains in the reading; no real calibration claim"
+  },
+  "response": {
+    "intercept": 12.55,
+    "current_coefficient": 3.0,
+    "current_center": 2.0,
+    "alignment_coefficient": -1.30,
+    "backlash_coefficient": -0.35,
+    "pad_coefficient": 0.50,
+    "pad_center": 3.0,
+    "torque_coefficient": 0.25,
+    "torque_center": 2.5
+  },
+  "stages": {
+    "before": {
+      "process_stage": "Before Improvement",
+      "record_prefix": "BL",
+      "part_prefix": "EG-B",
+      "batch_prefix": "BATCH-B",
+      "start_date": "2026-08-03",
+      "process_seed_key": "before_process",
+      "measurement_seed_key": "before_measurement",
+      "improvement_plan_id": "NOT-APPLIED",
+      "improvement_actions": "Baseline condition; no improvement actions applied",
+      "operators": [
+        {"id": "OP-A", "current_bias_a": 0.035, "alignment_mean_mm": 0.19, "torque_mean_nm": 2.48},
+        {"id": "OP-B", "current_bias_a": 0.000, "alignment_mean_mm": 0.27, "torque_mean_nm": 2.40},
+        {"id": "OP-C", "current_bias_a": -0.045, "alignment_mean_mm": 0.35, "torque_mean_nm": 2.32}
+      ],
+      "batch": {
+        "current_drift_sd_a": 0.025,
+        "backlash_mean_deg": 0.76,
+        "backlash_mean_sd_deg": 0.10,
+        "pad_mean_mm": 3.00,
+        "pad_mean_sd_mm": 0.045
+      },
+      "variables": {
+        "motor_current_a": {"base_mean": 1.93, "sd": 0.22, "night_effect": -0.025, "bounds": [1.35, 2.55], "digits": 3},
+        "jaw_alignment_error_mm": {"sd": 0.125, "night_effect": 0.035, "bounds": [0.02, 0.75], "digits": 3},
+        "gear_backlash_deg": {"sd": 0.26, "bounds": [0.15, 1.65], "digits": 3},
+        "pad_thickness_mm": {"sd": 0.095, "bounds": [2.70, 3.30], "digits": 3},
+        "fastener_torque_nm": {"sd": 0.22, "bounds": [1.75, 3.05], "digits": 3}
+      },
+      "part_residual_sd_n": 0.28
+    },
+    "after": {
+      "process_stage": "After Improvement",
+      "record_prefix": "AF",
+      "part_prefix": "EG-A",
+      "batch_prefix": "BATCH-A",
+      "start_date": "2026-08-24",
+      "process_seed_key": "after_process",
+      "measurement_seed_key": "after_measurement",
+      "improvement_plan_id": "IMP-EG-01",
+      "improvement_actions": "Closed-loop motor-current setpoint and alarm | Alignment poka-yoke fixture | Gear-backlash incoming inspection | Pad-thickness incoming inspection | Program-controlled torque screwdriver",
+      "operators": [
+        {"id": "OP-A", "current_bias_a": 0.010, "alignment_mean_mm": 0.15, "torque_mean_nm": 2.50},
+        {"id": "OP-B", "current_bias_a": 0.000, "alignment_mean_mm": 0.16, "torque_mean_nm": 2.50},
+        {"id": "OP-C", "current_bias_a": -0.010, "alignment_mean_mm": 0.17, "torque_mean_nm": 2.49}
+      ],
+      "batch": {
+        "current_drift_sd_a": 0.012,
+        "backlash_mean_deg": 0.45,
+        "backlash_mean_sd_deg": 0.04,
+        "pad_mean_mm": 3.00,
+        "pad_mean_sd_mm": 0.020
+      },
+      "variables": {
+        "motor_current_a": {"base_mean": 1.935, "sd": 0.12, "night_effect": 0.000, "bounds": [1.35, 2.55], "digits": 3},
+        "jaw_alignment_error_mm": {"sd": 0.060, "night_effect": 0.005, "bounds": [0.02, 0.75], "digits": 3},
+        "gear_backlash_deg": {"sd": 0.12, "bounds": [0.15, 1.65], "digits": 3},
+        "pad_thickness_mm": {"sd": 0.050, "bounds": [2.70, 3.30], "digits": 3},
+        "fastener_torque_nm": {"sd": 0.080, "bounds": [1.75, 3.05], "digits": 3}
+      },
+      "part_residual_sd_n": 0.28
+    }
+  },
+  "msa": {
+    "source_stage_key": "before",
+    "selection_quantiles": [0.05, 0.15, 0.25, 0.35, 0.45, 0.55, 0.65, 0.75, 0.85, 0.95],
+    "replicates": 2,
+    "reference_record_digits": 6,
+    "start_timestamp_sgt": "2026-08-17T08:00:00+08:00",
+    "interval_minutes": 3,
+    "randomization": "All part-appraiser-replicate combinations shuffled in one complete sequence"
+  },
+  "analysis": {
+    "imr_d2": 1.128,
+    "mr_ucl_factor": 3.267,
+    "control_sigma_multiplier": 3.0,
+    "capability_sigma_multiplier": 3.0,
+    "gage_study_sigma_multiplier": 6.0,
+    "ndc_multiplier": 1.41,
+    "ppk_reference_min": 1.33,
+    "gage_rr_tolerance_pass_pct": 10.0,
+    "gage_rr_tolerance_fail_pct": 30.0,
+    "gage_rr_ndc_min": 5
+  },
+  "note": "All values and relationships are unverified portfolio-demonstration assumptions. Improvement effects are deliberately encoded only in observable process-factor parameters. The unobserved part-residual SD remains 0.28 N in both stages. Fixed seeds were declared before reviewing generated statistical results and are not evidence of real performance."
+}
