@@ -42,12 +42,22 @@ def _read_csv(path: Path) -> pd.DataFrame:
         raise SixSigmaDataError(f"Cannot read {path.name}: {exc}") from exc
 
 
-def _sha256(path: Path) -> str:
-    digest = hashlib.sha256()
-    with path.open("rb") as source:
-        for chunk in iter(lambda: source.read(1024 * 1024), b""):
-            digest.update(chunk)
-    return digest.hexdigest()
+_TEXT_HASH_SUFFIXES = {".csv", ".json", ".md", ".py", ".txt"}
+
+
+def _sha256_bytes(payload: bytes) -> str:
+    return hashlib.sha256(payload).hexdigest()
+
+
+def _hash_matches(path: Path, expected: str) -> bool:
+    """Treat LF and CRLF as equivalent while protecting text content."""
+    payload = path.read_bytes()
+    candidates = {_sha256_bytes(payload)}
+    if path.suffix.lower() in _TEXT_HASH_SUFFIXES:
+        lf_payload = payload.replace(b"\r\n", b"\n").replace(b"\r", b"\n")
+        candidates.add(_sha256_bytes(lf_payload))
+        candidates.add(_sha256_bytes(lf_payload.replace(b"\n", b"\r\n")))
+    return expected in candidates
 
 
 def _verify_hashes(data_dir: Path, hashes: dict, prefix: str) -> None:
@@ -55,8 +65,7 @@ def _verify_hashes(data_dir: Path, hashes: dict, prefix: str) -> None:
         path = data_dir / relative_name
         if not path.is_file():
             raise SixSigmaDataError(f"Required {prefix} file is missing: {relative_name}")
-        actual = _sha256(path)
-        if actual != expected:
+        if not _hash_matches(path, expected):
             raise SixSigmaDataError(f"SHA-256 mismatch for {relative_name}")
 
 

@@ -124,6 +124,15 @@ with tempfile.TemporaryDirectory() as temp_dir:
         raise AssertionError("A modified source CSV was accepted")
 print("[PASS] 11. Source hash changes are rejected")
 
+with tempfile.TemporaryDirectory() as temp_dir:
+    portable_dir = Path(temp_dir) / "quality_v5"
+    shutil.copytree(QUALITY_V5_DIR, portable_dir)
+    portable_manifest = portable_dir / "chart_manifest.csv"
+    portable_manifest.write_bytes(portable_manifest.read_bytes().replace(b"\r\n", b"\n"))
+    portable_results = load_six_sigma_results(portable_dir)
+    assert len(portable_results["chart_manifest"]) == 12
+print("[PASS] 12. LF/CRLF normalization preserves cross-platform validation")
+
 assert database_counts() == before_counts
-print("[PASS] 12. Six Sigma reads do not modify the MES database")
+print("[PASS] 13. Six Sigma reads do not modify the MES database")
 print("ALL TESTS PASSED")
